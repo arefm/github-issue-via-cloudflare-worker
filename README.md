@@ -53,7 +53,25 @@ If the project belongs to an organisation rather than your personal account, rep
 
 ## Auto-deploy
 
-Automatic deployment via GitHub Actions is disabled by default. To enable it, add a repository variable in GitHub under Settings > Secrets and variables > Actions > Variables:
+Automatic deployment via GitHub Actions is disabled by default. To enable it, you need two Cloudflare credentials added as repository secrets, plus a repository variable to turn the deploy on.
+
+**1. Get your Cloudflare credentials**
+
+- **Account ID** - log in to the Cloudflare dashboard, select any domain, and copy the Account ID from the right-hand sidebar under "API".
+- **API Token** - go to https://dash.cloudflare.com/profile/api-tokens, click "Create Token", and use the "Edit Cloudflare Workers" template. Scope it to your account.
+
+**2. Add them as GitHub repository secrets**
+
+Go to your repository on GitHub: Settings > Secrets and variables > Actions > Secrets > New repository secret.
+
+| Secret | Value |
+|---|---|
+| `CLOUDFLARE_ACCOUNT_ID` | Your Cloudflare Account ID |
+| `CLOUDFLARE_API_TOKEN` | Your Cloudflare API Token |
+
+**3. Enable auto-deploy**
+
+In the same settings page, switch to the Variables tab and add:
 
 | Variable | Value |
 |---|---|
