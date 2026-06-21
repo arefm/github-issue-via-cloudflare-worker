@@ -11,7 +11,7 @@ A Cloudflare Worker that receives inbound email via Cloudflare Email Routing and
    npm install
    ```
 
-2. **Configure** - open `src/config.js` and set `owner` and `repo` to your target GitHub repository. Optionally set `labels`, `assignee`, `branch`, and `project`.
+2. **Configure** - open `src/config.js` and set `owner` and `repo` to your target GitHub repository. Optionally set `labels` and `assignee`.
 
 3. **Set the GitHub token secret** - go to https://github.com/settings/personal-access-tokens, create a fine-grained token scoped to the target repository with `Issues: Read and write` permission, then run:
    ```sh
@@ -34,22 +34,8 @@ All non-secret options are in `src/config.js`:
 | `github.owner` | `''` | GitHub repository owner |
 | `github.repo` | `''` | GitHub repository name |
 | `github.labels` | `[]` | Labels to apply to every issue |
-| `github.project` | `null` | GitHub Project v2 node ID to link every issue to (see below) |
-| `github.branch` | `null` | Branch name appended as a footer in the issue body |
 | `github.assignee` | `null` | GitHub username to assign to every issue |
 | `hideSender` | `true` | When true, the sender address is omitted from the issue |
-
-### Finding your Project v2 node ID
-
-Run the following to list your GitHub Projects and their node IDs:
-
-```sh
-gh api graphql -f query='{ viewer { projectsV2(first: 10) { nodes { id title } } } }'
-```
-
-Copy the `id` value (it looks like `PVT_kwDO...`) and set it as `github.project` in `src/config.js`.
-
-If the project belongs to an organisation rather than your personal account, replace `viewer` with `organization(login: "your-org")`.
 
 ## Auto-deploy
 
