@@ -1,11 +1,11 @@
 export const config = {
   github: {
-    owner: 'arefm',
-    repo: 'mana',
-    labels: ['hello'],
+    owner: '',
+    repo: '',
+    labels: [],
     project: null,
     branch: null,
-    assignee: 'arefm',
+    assignee: null,
   },
   hideSender: false,
 };
