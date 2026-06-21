@@ -55,6 +55,8 @@ If the project belongs to an organisation rather than your personal account, rep
 
 Automatic deployment via GitHub Actions is disabled by default. To enable it, you need two Cloudflare credentials added as repository secrets, plus a repository variable to turn the deploy on.
 
+If you prefer to deploy manually with `npm run deploy`, you can skip this section entirely and just run `npx wrangler login` once to authenticate locally.
+
 **1. Get your Cloudflare credentials**
 
 - **Account ID** - log in to the Cloudflare dashboard, select any domain, and copy the Account ID from the right-hand sidebar under "API".
