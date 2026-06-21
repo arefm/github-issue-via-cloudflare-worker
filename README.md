@@ -87,3 +87,37 @@ Stream live logs from the deployed worker:
 ```sh
 npx wrangler tail
 ```
+
+## Troubleshooting
+
+### "Message blocked — 555 5.7.1 Internal error"
+
+This bounce means the worker was invoked but threw an error and called `setReject`. To see the actual error, run `npx wrangler tail` and send a test email — the error is logged to the console.
+
+Common causes:
+
+**`GITHUB_TOKEN` not set or expired**
+
+Verify the secret exists:
+```sh
+npx wrangler secret list
+```
+If it's missing or stale, re-set it:
+```sh
+npx wrangler secret put GITHUB_TOKEN
+```
+The token must be a fine-grained personal access token scoped to the target repository with `Issues: Read and write` permission.
+
+**Label does not exist in the target repository**
+
+GitHub's API returns a 422 error if any label in `github.labels` doesn't exist in the repo. Either create the label on GitHub first, or set `labels: []` in `src/config.js` to apply no labels.
+
+**Assignee is not a repository collaborator**
+
+Setting `github.assignee` to a user who is not a collaborator on the repository also causes a 422. Set it to `null` if unsure.
+
+### Auto-deploy not triggering
+
+Check that the `ENABLE_AUTO_DEPLOY` repository variable is set to the string `true` (not a secret — it lives under Settings > Secrets and variables > Actions > **Variables**). If it is unset or set to any other value the workflow job is skipped.
+
+Also verify both `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are present under **Secrets** in the same settings page. The API token must be created using the **"Edit Cloudflare Workers"** template (or include at minimum `Account — Workers Scripts: Edit` permission). Leave the **Client IP Address Filtering** field empty so GitHub Actions' dynamic runner IPs are not blocked.
