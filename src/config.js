@@ -3,6 +3,7 @@ export const config = {
     owner: '',
     repo: '',
     labels: [],
+    project: null,
     branch: null,
     assignee: null,
   },
