@@ -1,7 +1,7 @@
 export const config = {
   github: {
-    owner: '',
-    repo: '',
+    owner: 'arefm',
+    repo: 'mana',
     labels: [],
     project: null,
     branch: null,
