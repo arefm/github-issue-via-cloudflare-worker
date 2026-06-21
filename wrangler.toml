@@ -1,0 +1,7 @@
+name = "github-issue-via-cloudflare-worker"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+[[send_email]]
+name = "SEND_EMAIL"
+
