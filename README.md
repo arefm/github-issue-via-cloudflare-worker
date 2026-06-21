@@ -13,7 +13,7 @@ A Cloudflare Worker that receives inbound email via Cloudflare Email Routing and
 
 2. **Configure** - open `src/config.js` and set `owner` and `repo` to your target GitHub repository. Optionally set `labels`, `assignee`, `branch`, and `project`.
 
-3. **Set the GitHub token secret** (needs `issues: write` on the target repo)
+3. **Set the GitHub token secret** - go to https://github.com/settings/personal-access-tokens, create a fine-grained token scoped to the target repository with `Issues: Read and write` permission, then run:
    ```sh
    npx wrangler secret put GITHUB_TOKEN
    ```
