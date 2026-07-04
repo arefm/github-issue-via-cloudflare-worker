@@ -58,6 +58,20 @@ Once it's deployed, go to the Cloudflare dashboard, turn on Email Routing for yo
 npm run deploy
 ```
 
+## Auto-deploy
+
+There's a GitHub Actions workflow at `.github/workflows/deploy.yml` that deploys automatically on every push to a branch matching `release*` (e.g. `release-1.0`, `release-2026-01`), but it's off by default. To turn it on:
+
+1. Get an Account ID and an API token from Cloudflare. The Account ID is in the dashboard sidebar under any domain. For the token, go to https://dash.cloudflare.com/profile/api-tokens, create one from the "Edit Cloudflare Workers" template, and scope it to your account.
+2. Add them as repository secrets under Settings, Secrets and variables, Actions, Secrets: `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`.
+3. Add a repository variable in the same place, under the Variables tab: `ENABLE_AUTO_DEPLOY` set to `true`. If it's unset or anything else, the workflow just skips the deploy job.
+
+The workflow runs `npm ci`, then deploys with `wrangler deploy --keep-vars`. `--keep-vars` means it won't overwrite whatever `GITHUB_OWNER`, `GITHUB_REPO`, `GITHUB_LABELS`, `GITHUB_ASSIGNEE` and `GITHUB_ROUTES` values are already live on Cloudflare, so before turning on auto-deploy, do at least one manual `npm run setup` and `npm run deploy` from your own machine to get the real configuration and secrets in place. After that, auto-deploy will just ship your code changes without touching that config.
+
+`wrangler.toml` is gitignored, so it doesn't exist in a fresh checkout for CI either. The workflow copies `wrangler.toml.example` into place if `wrangler.toml` isn't there. That's fine for `[vars]`, since `--keep-vars` covers those, but things that live directly in the file rather than as vars, like a custom domain, extra `send_email` bindings, or observability settings, aren't "kept" the same way and would fall back to what's in the example (a single unrestricted binding, no custom domain, no observability). If you're relying on any of those in production, commit your real `wrangler.toml` instead of leaving it gitignored. It doesn't contain secrets, only routing configuration, so it's safe to commit if you're comfortable with that config being visible in the repo.
+
+If you'd rather deploy by hand, you can ignore this whole section and just run `npm run deploy` yourself. `scripts/initialize.js` also skips itself entirely when it detects a CI environment, so `npm ci` won't get stuck waiting on prompts that no one can answer.
+
 ## Resetting your local configuration
 
 ```sh

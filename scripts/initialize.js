@@ -23,6 +23,11 @@ function parseLabelsInput(labelsInput, fallback) {
 }
 
 async function main() {
+  if (process.env.CI) {
+    console.log('CI environment detected — skipping interactive setup (scripts/initialize.js).');
+    return;
+  }
+
   if (!input.isTTY) {
     console.error(
       'Error: this script needs an interactive terminal to prompt for answers.\n' +
