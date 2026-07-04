@@ -26,7 +26,7 @@ One thing to know: it needs a real interactive terminal to work. When npm runs `
 git clone https://github.com/arefm/github-issue-via-cloudflare-worker.git
 cd github-issue-via-cloudflare-worker
 npm install
-node scripts/initialize.js
+npm run setup # or: node scripts/initialize.js
 ```
 
 ### What it asks you
