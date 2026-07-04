@@ -1,0 +1,28 @@
+name = "cf-worker-gh-issue"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+workers_dev = true
+
+[vars]
+GITHUB_OWNER=""
+GITHUB_REPO=""
+GITHUB_LABELS=[]
+GITHUB_ASSIGNEE=""
+# Per-destination-address overrides (JSON string), keyed by lowercased recipient address:
+# '{"someone@example.com":{"owner":"...","repo":"...","labels":["..."],"assignee":"..."}}'
+GITHUB_ROUTES='{}'
+
+[secrets]
+required = [ "GITHUB_TOKEN", "WORKER_API_SECRET" ]
+
+[[send_email]]
+name = "<NAME_FOR_BINDING2>"
+destination_address = "<YOUR_EMAIL>@example.com"
+
+[[send_email]]
+name = "<NAME_FOR_BINDING3>"
+allowed_destination_addresses = [ "<YOUR_EMAIL>@example.com", "<YOUR_EMAIL2>@example.com" ]
+
+[[routes]]
+pattern = ""
+custom_domain = false

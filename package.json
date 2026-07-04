@@ -1,0 +1,30 @@
+{
+  "name": "github-issue-via-cloudflare-worker",
+  "version": "1.0.0",
+  "author": "Aref <code@aref.uk> (https://github.com/arefm)",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "predeploy": "husky",
+    "dev": "npx wrangler dev",
+    "deploy": "npx wrangler deploy",
+    "gen_secretkey": "openssl rand -hex 32;",
+    "test": "vitest run",
+    "lint": "eslint src test scripts",
+    "prepare": "husky",
+    "postinstall": "npm run setup",
+    "setup": "node scripts/initialize.js",
+    "reset": "node scripts/reset.js"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.18.0",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.6.0",
+    "globals": "^17.7.0",
+    "husky": "^9.1.7",
+    "vitest": "^4.1.9"
+  },
+  "dependencies": {
+    "postal-mime": "^2.7.4"
+  }
+}
