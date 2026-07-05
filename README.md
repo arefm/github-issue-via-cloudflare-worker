@@ -1,5 +1,7 @@
 # Github issue via Cloudflare worker
 
+[![GitHub release](https://img.shields.io/github/v/release/arefm/github-issue-via-cloudflare-worker)](https://github.com/arefm/github-issue-via-cloudflare-worker/releases/latest)
+
 A Cloudflare Worker that files GitHub issues from inbound email or from an authenticated HTTP endpoint. It can also route different addresses to different repos, labels and assignees.
 
 ## What it does
