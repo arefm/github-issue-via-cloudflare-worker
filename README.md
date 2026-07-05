@@ -1,6 +1,6 @@
 # Github issue via Cloudflare worker
 
-[![GitHub release](https://img.shields.io/github/v/release/arefm/github-issue-via-cloudflare-worker)](https://github.com/arefm/github-issue-via-cloudflare-worker/releases/latest)
+[![package.json version](https://img.shields.io/github/package-json/v/arefm/github-issue-via-cloudflare-worker)](package.json)
 
 A Cloudflare Worker that files GitHub issues from inbound email or from an authenticated HTTP endpoint. It can also route different addresses to different repos, labels and assignees.
 
@@ -141,3 +141,7 @@ GitHub's API returns a 422 error if any label in `GITHUB_LABELS` (or in a route'
 **Assignee isn't a repository collaborator**
 
 Setting an assignee who isn't a collaborator on the repository also causes a 422. Clear the variable if you're not sure.
+
+## Contact us
+
+Questions, bug reports, or feature requests? Reach out to Aref M at [code@aref.uk](mailto:code@aref.uk).
