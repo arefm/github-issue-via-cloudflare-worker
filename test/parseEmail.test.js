@@ -32,10 +32,22 @@ describe('parseEmail', () => {
     expect(title).toBe('(no subject)');
   });
 
-  it('strips HTML tags when only an HTML body is present', async () => {
-    const { body } = await parseEmail(rawEmail({ contentType: 'text/html', text: 'Rich content' }));
-    expect(body).toContain('Rich content');
+  it('converts an HTML-only body to Markdown instead of leaking tags', async () => {
+    const raw = new TextEncoder().encode(
+      `From: sender@example.com\r\n` +
+        `To: recipient@example.com\r\n` +
+        `Subject: Rich\r\n` +
+        `Content-Type: text/html; charset=utf-8\r\n` +
+        `\r\n` +
+        `<p>Hello <strong>world</strong></p><ul><li>one</li><li>two</li></ul><a href="https://example.com">link</a>\r\n`
+    ).buffer;
+
+    const { body } = await parseEmail(raw);
+    expect(body).toContain('**world**');
+    expect(body).toContain('* one');
+    expect(body).toContain('[link](https://example.com)');
     expect(body).not.toContain('<p>');
+    expect(body).not.toContain('<strong>');
   });
 
   it('appends sender address when hideSender is false', async () => {

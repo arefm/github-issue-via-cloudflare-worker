@@ -1,4 +1,7 @@
 import PostalMime from 'postal-mime';
+import { NodeHtmlMarkdown } from 'node-html-markdown';
+
+const htmlToMarkdown = new NodeHtmlMarkdown();
 
 export async function parseEmail(rawBuffer, { hideSender } = {}) {
   const email = await PostalMime.parse(rawBuffer);
@@ -9,7 +12,7 @@ export async function parseEmail(rawBuffer, { hideSender } = {}) {
   if (email.text) {
     body = email.text;
   } else if (email.html) {
-    body = email.html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    body = htmlToMarkdown.translate(email.html);
   }
 
   if (!hideSender && email.from?.address) {

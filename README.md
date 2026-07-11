@@ -8,7 +8,7 @@ A Cloudflare Worker that files GitHub issues from inbound email or from an authe
 
 The worker gives you two ways to create a GitHub issue, and both end up calling the same GitHub API code underneath:
 
-- **Inbound email**. Hook it up to Cloudflare Email Routing and any email sent to a configured address turns into a GitHub issue. The subject becomes the issue title, the body becomes the issue content. You can optionally append the sender's address to the body, or hide it completely.
+- **Inbound email**. Hook it up to Cloudflare Email Routing and any email sent to a configured address turns into a GitHub issue. The subject becomes the issue title, the body becomes the issue content — HTML emails are converted to Markdown rather than dumping raw tags into the issue. You can optionally append the sender's address to the body, or hide it completely.
 - **`POST /issues` HTTP endpoint**. Protected with a bearer token, so anything that can make an HTTP request can file an issue: a contact form, another service, a script. It takes a `title`, a `body`, and optional `name`/`email` fields that get appended to the body.
 
 ### Why this is useful

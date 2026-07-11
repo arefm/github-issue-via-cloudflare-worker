@@ -7,4 +7,14 @@ export default defineConfig({
       wrangler: { configPath: './wrangler.toml' },
     }),
   ],
+  test: {
+    deps: {
+      optimizer: {
+        ssr: {
+          enabled: true,
+          include: ['css-what'],
+        },
+      },
+    },
+  },
 });
